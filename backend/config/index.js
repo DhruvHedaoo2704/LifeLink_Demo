@@ -30,7 +30,7 @@ const config = {
       return list.split(',').map(item => item.trim());
     }
     if (this.isProduction) {
-      return [];
+      return ['https://life-link-wheat.vercel.app'];
     }
     return ['http://localhost:5173', 'http://127.0.0.1:5173'];
   },
