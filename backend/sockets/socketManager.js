@@ -8,7 +8,13 @@ let io = null;
 export const initSocket = (server) => {
   io = new Server(server, {
     cors: {
-      origin: config.corsOrigins, // Limit to allowed CORS origins in production
+      origin: (origin, callback) => {
+        if (config.isOriginAllowed(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       methods: ['GET', 'POST']
     }
   });
