@@ -34,6 +34,16 @@ const config = {
     }
     return ['http://localhost:5173', 'http://127.0.0.1:5173'];
   },
+  isOriginAllowed(origin) {
+    if (!origin) return true;
+    const origins = this.corsOrigins;
+    if (origins.includes(origin) || origins.includes('*')) {
+      return true;
+    }
+    const isVercelPreview = origin.endsWith('.vercel.app') && origin.toLowerCase().includes('life-link');
+    const isLocalhost = origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:');
+    return isVercelPreview || isLocalhost;
+  },
 
   // JWT configuration
   get jwtSecret() { 
